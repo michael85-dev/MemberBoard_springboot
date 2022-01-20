@@ -28,9 +28,10 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public Long save(MemberSaveDTO memberSaveDTO) throws IOException {
-        boolean checkEmail = mr.findByMemberEmail(memberSaveDTO.getMemberEmail());
+        MemberEntity checkEmail = mr.findByMemberEmail(memberSaveDTO.getMemberEmail());
 
-        if (checkEmail) {
+
+        if (checkEmail == null) {
             Long memberId = null;
 
             return memberId;
@@ -58,7 +59,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public boolean login(MemberLoginDTO memberLoginDTO) {
-        MemberEntity memberEntity = mr.findByEmail(memberLoginDTO.getMemberEmail());
+        MemberEntity memberEntity = mr.findByMemberEmail(memberLoginDTO.getMemberEmail());
 
         if (memberEntity != null) {
             if(memberLoginDTO.getMemberPassword().equals(memberEntity.getMemberPassword())) {
@@ -73,7 +74,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public String findByNickName(MemberLoginDTO memberLoginDTO) {
-        MemberEntity memberEntity = mr.findByEmail(memberLoginDTO.getMemberEmail());
+        MemberEntity memberEntity = mr.findByMemberEmail(memberLoginDTO.getMemberEmail());
 
         String nickName = memberEntity.getMemberNickName();
 
@@ -82,7 +83,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberDetailDTO findByMemberId(MemberLoginDTO memberLoginDTO) {
-        MemberEntity memberEntity = mr.findByEmail(memberLoginDTO.getMemberEmail());
+        MemberEntity memberEntity = mr.findByMemberEmail(memberLoginDTO.getMemberEmail());
 
         MemberDetailDTO memberDetailDTO = MemberDetailDTO.injectInfo(memberEntity);
 
@@ -91,7 +92,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberDetailDTO findById(Long memberId) {
-        MemberEntity memberEntity = mr.findByMemberId(memberId);
+        MemberEntity memberEntity = mr.findById(memberId).get();
 
         MemberDetailDTO memberDetailDTO = MemberDetailDTO.injectInfo(memberEntity);
 

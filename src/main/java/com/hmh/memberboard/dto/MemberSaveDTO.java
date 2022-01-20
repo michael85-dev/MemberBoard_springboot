@@ -22,4 +22,6 @@ public class MemberSaveDTO {
     private MultipartFile memberPhoto;
     private String memberPhotoName;
 
+    public MemberSaveDTO(String s, String s1, String s2, String s3, String s4, String s5) {
+    }
 }

@@ -43,7 +43,7 @@ public class BoardServiceImpl implements BoardService{
         }
         // boardSave의 데이터를 Entity에 담아서 보내줘야함.
         // MemberEntity와 연관관계가 있으므로 MemberEntity를 호출하고 그것을 가지고 와야함.
-        MemberEntity memberEntity = mr.findByMemberId(boardSaveDTO.getMemberId());
+        MemberEntity memberEntity = mr.findById(boardSaveDTO.getMemberId()).get();
         BoardEntity boardEntity = BoardEntity.toSave(boardSaveDTO, memberEntity);
 
 
@@ -79,7 +79,8 @@ public class BoardServiceImpl implements BoardService{
         // 사진 정보 업데이트를 해줘야할까?
 
         // 데이터 보내기
-        MemberEntity memberEntity = mr.findByMemberId(boardDetailDTO.getMemberId());
+//        MemberEntity memberEntity = mr.findById(boardDetailDTO.getMemberId()); -> 어떻게 Entity를 적합하게 꺼내올 수 있을까?
+        MemberEntity memberEntity = mr.findByMemberNickName(boardDetailDTO.getBoardWriter()); // 이거로 되나?
         BoardEntity boardEntity = BoardEntity.toUpdate(boardDetailDTO, memberEntity);
 
         Long boardId = br.save(boardEntity).getId();

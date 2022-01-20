@@ -30,10 +30,14 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Long save(CommentSaveDTO commentSaveDTO) {
-        Optional<BoardEntity> boardEntityOptional = br.findById(commentSaveDTO.getBoardId());
-        BoardEntity boardEntity = boardEntityOptional.get();
+        // 이건 제대로 된 코드문일까?
+//        Optional<BoardEntity> boardEntityOptional = br.findById(commentSaveDTO.getBoardId());
+//        BoardEntity boardEntity = boardEntityOptional.get();
 
-        MemberEntity memberEntity = mr.findByMemberId(commentSaveDTO.getMemberId());
+        BoardEntity boardEntity = br.findByBoardWriter(commentSaveDTO.getCommentWriter());
+
+//        MemberEntity memberEntity = mr.findByMemberId(commentSaveDTO.getMemberId()); => 어떻게 가지고 올까.
+        MemberEntity memberEntity = mr.findByMemberNickName(commentSaveDTO.getCommentWriter());
         CommentEntity commentEntity = CommentEntity.toSave(commentSaveDTO, boardEntity, memberEntity);
 
         Long commentId = cr.save(commentEntity).getId();

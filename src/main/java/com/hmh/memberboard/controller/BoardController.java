@@ -75,7 +75,7 @@ public class BoardController {
         return "main";
     }
 
-    @GetMapping("{boardId")
+    @GetMapping("{boardId}")
     public String findById(@PathVariable("boardId") Long boardId, Model model, HttpSession session) {
         Long memberId = (Long)session.getAttribute("member");
         MemberDetailDTO memberDetailDTO = ms.findById(memberId);
