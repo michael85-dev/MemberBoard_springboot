@@ -38,7 +38,7 @@ public class MemberController {
     }
 
     @PostMapping("save")
-    public String save(@PathVariable @ModelAttribute("save") MemberSaveDTO memberSaveDTO, BindingResult bindingResult) throws IOException {
+    public String save(@PathVariable @ModelAttribute MemberSaveDTO memberSaveDTO, BindingResult bindingResult) throws IOException {
         System.out.println("MemberController.save");
         Long memberId = ms.save(memberSaveDTO);
         if (memberId == null) {
