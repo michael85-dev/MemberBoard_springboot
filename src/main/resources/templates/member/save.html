@@ -10,8 +10,11 @@
 </head>
 <body>
 <h2>Member-save page</h2>
-<form action="/member/save" method="post" th:object="${membersave}" enctype="multipart/form-data"> <br>
-    아이디 : <input type="text" th:field="*{memberEmail}" onkeyup="idCehck()"> <span id="idCheck"></span> <br>
+<form action="/member/save" method="post" th:object="${msave}" enctype="multipart/form-data"> <br>
+    <div th:if="${#fields.hasGlobalErrors()}"> <!-- 글로벌 오류가 있는지 따지기 위한 명령문. controller에 reject에 의해서 해당 문구를 사용할 수 있음. -->
+        <p class="field-error" th:each="err: ${#fields.globalErrors()}" th:text="${err}">글로벌 오류</p>
+    </div>
+    아이디 : <input type="text" th:field="*{memberEmail}" > <!-- onkeyup="idCheck()" <span id="idCheck"></span> --> <br>
     비밀번호 : <input type="password" th:field="*{memberPassword}" placeholder="8 ~ 30자로 입력해주세요"> <br>
     비밀번호 확인 : <input type="password" id="pwCheck" placeholder="다시 한번 입력해 주세요" onkeyup="pwCheck()"> <span id="result"></span> <br>
     성함 : <input type="text" th:field="*{memberName}"> <br>
@@ -24,20 +27,7 @@
 </form>
 </body>
 <script>
-    function idCheck() {
-        const id = document.getElementById('memberEmail').value;
-        const idCheck = document.getElementById('idCheck'); // 어떻게 데이터 값을 가지고 올 수 있는가.
-        const reuslt = '[[${member.memberEmail}]]'; //??
-        if (id == result) {
-            idCheck.style.color = 'red';
-            idCheck.innerHTML = '중복된 아이디 입니다.';
-        } else {
-            idCheck.style.color = 'green';
-            idCheck.innerHTML = '사용 가능합니다';
-        }
-    }
-
-    function pwCheck() {
+     function pwCheck() {
         const pw = document.getElementById('memberPassword').value;
         console.log(pw);
         const pwC = document.getElementById('pwCheck').value;

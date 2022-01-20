@@ -23,7 +23,8 @@
         전화번호 : <input type="text" th:field="*{memberPhone}" th:value="*{memberPhone}"> <br>
         주소 : <!-- 주소. 다음 api 사용--> <br>
         메모 : <textarea th:field="*{memberMemo}" rows="5" th:value="*{memberMemo}"></textarea> <br>
-        이미지 : <input type="file"> <br>
+        이미지 : <img th:src="@{|/upload/${member.memberPhotoName}|}" alter="사진이 없어요">
+                <input type="file"> <br>
         <input type="buttont" onclick="update()" value="수정"> <button id="bToMain">돌아가기</button>
     </form>
 </section>

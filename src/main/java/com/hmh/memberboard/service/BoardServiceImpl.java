@@ -35,7 +35,7 @@ public class BoardServiceImpl implements BoardService{
         String boardPhotoName = boardPhoto.getOriginalFilename();
 
         boardPhotoName = System.currentTimeMillis() + "-" + boardPhotoName;
-        String savePath = "";
+        String savePath = "D:\\GitHub\\Test\\MemberBoard\\src\\main\\resources\\static\\photo";
 
         if (!boardPhoto.isEmpty()) {
             boardPhoto.transferTo(new File(savePath));

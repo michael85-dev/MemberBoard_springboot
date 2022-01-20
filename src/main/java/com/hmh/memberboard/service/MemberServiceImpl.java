@@ -44,7 +44,7 @@ public class MemberServiceImpl implements MemberService{
 
             memberPhotoName = System.currentTimeMillis() + "-" + memberPhotoName;
 
-            String savePath = "";
+            String savePath = "D:\\GitHub\\Test\\MemberBoard\\src\\main\\resources\\static\\photo";
 
             if (!memberPhoto.isEmpty()) {
                 memberPhoto.transferTo(new File(savePath));

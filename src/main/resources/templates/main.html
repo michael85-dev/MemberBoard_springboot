@@ -16,7 +16,7 @@
 <a href="/member/logout">로그아웃</a>
 <a th:href="@{|/member/${member.memberId}|}">정보 확인</a>
 <section>
-    <div th: >
+    <div th:if="${session['loginid']} eq 'admin'" >
         <a href="/member/">회원 목록 조회</a> <!-- 관리자만 회원 목록을 볼 수 있음. -->
     </div>
     <div th: > <!-- 로그인 해야 가능 -->

@@ -32,13 +32,13 @@ public class MemberController {
     public String saveForm(Model model) {
         System.out.println("MemberController.saveForm");
 
-        model.addAttribute("membersave", new MemberSaveDTO());
+        model.addAttribute("msave", new MemberSaveDTO());
 
         return "member/save";
     }
 
     @PostMapping("save")
-    public String save(@PathVariable @ModelAttribute MemberSaveDTO memberSaveDTO, BindingResult bindingResult) throws IOException {
+    public String save(@ModelAttribute MemberSaveDTO memberSaveDTO, BindingResult bindingResult) throws IOException {
         System.out.println("MemberController.save");
         Long memberId = ms.save(memberSaveDTO);
         if (memberId == null) {
