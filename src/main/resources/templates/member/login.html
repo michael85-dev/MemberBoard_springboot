@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardProject</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+<h2>member-login page</h2>
+<form action="/member/login" method="post" th:object="${memberlogin}">
+    아이디 : <input type="text" th:field="*{memberEmail}" placeholder="아이디를 입력하세요">
+    비밀번호 : <input type="password" th:field="*{memberPassword}" placeholder="비밀번호를 입력하세요">
+<!--    <input type="button" onclick="pwCheck()" value="로그인">-->
+    <input type="subtmi" value="로그인">
+</form>
+</body>
+<script>
+    function pwCheck() {
+        const pw = document.getElementById('memberPassword').value; // 입력된 비밀번호
+        const pwC = '[[]]'
+    }
+</script>
+</html>

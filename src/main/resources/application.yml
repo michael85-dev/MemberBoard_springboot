@@ -1,0 +1,21 @@
+# 설정
+
+server:
+  port: 8091
+
+# DB 접속 정보
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/boardproject?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: boardproject
+    password: 1234
+  thymeleaf:
+    cache: false
+
+  # JPA
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardProject</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+<p th:text="${session['nickName']}"></p>
+<a href="/member/logout">로그아웃</a>
+<a th:href="@{|/member/${member.memberId}|}">정보 확인</a>
+<section>
+    <form action="/member/update" method="post" th:object="${member}">
+        회원번호 : <input type="text" th:field="*{memberId}" th:value="*{memberId}" readonly>
+        아이디 : <input type="text" th:field="*{memberEmail}" th:value="*{memberEmail}" readonly> <br>
+        비밀번호 : <input type="password" th:field="*{memberPassword}" th:value="*{memberPassword}" > <br>
+        비밀번호 확인 : <input type="password" id="pwCheck" onkeyup="pwCheck()"> <span id="result"></span> <br>
+        성함 : <input type="text" th:field="*{memberName}" th:value="*{memberName}"> <br>
+        닉네임 : <input type="text" th:field="*{memberNickName}" th:value="*{memberNickName}"> <br>
+        전화번호 : <input type="text" th:field="*{memberPhone}" th:value="*{memberPhone}"> <br>
+        주소 : <!-- 주소. 다음 api 사용--> <br>
+        메모 : <textarea th:field="*{memberMemo}" rows="5" th:value="*{memberMemo}"></textarea> <br>
+        이미지 : <input type="file"> <br>
+        <input type="buttont" onclick="update()" value="수정"> <button id="bToMain">돌아가기</button>
+    </form>
+</section>
+</body>
+<script>
+    function update() {
+        const pw = document.getElementById('memberPassword').value;
+        const pwCheck = document.getElementById('pwCheck').value;
+        const result = document.getElementById('result');
+
+        if (pw == pwCheck) {
+            updateForm.submit(); // 이거 제대로 작동 안하는거 같은데 어떻게 만들어야 하는가.
+        }
+    };
+
+    $("#bToMain").click(function(){
+        console.log("메인으로 돌아가기 호출됨");
+        location.href="/member/main";
+    });
+
+</script>
+</html>

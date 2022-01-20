@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardProject</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+<h2>Member-save page</h2>
+<form action="/member/save" method="post" th:object="${membersave}" enctype="multipart/form-data"> <br>
+    아이디 : <input type="text" th:field="*{memberEmail}" onkeyup="idCehck()"> <span id="idCheck"></span> <br>
+    비밀번호 : <input type="password" th:field="*{memberPassword}" placeholder="8 ~ 30자로 입력해주세요"> <br>
+    비밀번호 확인 : <input type="password" id="pwCheck" placeholder="다시 한번 입력해 주세요" onkeyup="pwCheck()"> <span id="result"></span> <br>
+    성함 : <input type="text" th:field="*{memberName}"> <br>
+    닉네임 : <input type="text" th:field="*{memberNickName}" placeholder="사용할 닉네임 설정"> <br>
+    전화번호 : <input type="text" th:field="*{memberPhone}" placeholder="000-0000-0000"> <br>
+    주소 : <!-- 주소. 다음 api 사용--> <br>
+    메모 : <textarea th:field="*{memberMemo}" rows="5"></textarea> <br>
+    이미지 : <input type="file"> <br>
+    <input type="submit" value="회원가입"> <button id="bToMain">돌아가기</button>
+</form>
+</body>
+<script>
+    function idCheck() {
+        const id = document.getElementById('memberEmail').value;
+        const idCheck = document.getElementById('idCheck'); // 어떻게 데이터 값을 가지고 올 수 있는가.
+        const reuslt = '[[${member.memberEmail}]]'; //??
+        if (id == result) {
+            idCheck.style.color = 'red';
+            idCheck.innerHTML = '중복된 아이디 입니다.';
+        } else {
+            idCheck.style.color = 'green';
+            idCheck.innerHTML = '사용 가능합니다';
+        }
+    }
+
+    function pwCheck() {
+        const pw = document.getElementById('memberPassword').value;
+        console.log(pw);
+        const pwC = document.getElementById('pwCheck').value;
+
+        const result = document.getElementById('result');
+
+        if (pw == pwC) {
+            result.style.color = 'green';
+            result.innerHTML = "비밀번호가 일치합니다";
+        } else {
+            result.style.color = 'red';
+            result.innerHTML = "비밀번호가 불일치합니다";
+        }
+    };
+
+    $("#bToMain").click(function(){
+       console.log("메인으로 돌아가기 호출됨");
+       location.href="/index";
+    });
+
+</script>
+</html>
