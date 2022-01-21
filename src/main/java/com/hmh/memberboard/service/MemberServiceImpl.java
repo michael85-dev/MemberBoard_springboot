@@ -156,4 +156,13 @@ public class MemberServiceImpl implements MemberService{
 
         return memberPaging;
     }
+
+    @Override
+    public Long find(String nickName) {
+        MemberEntity memberEntity = mr.findByMemberNickName(nickName);
+
+        MemberDetailDTO memberDetailDTO = MemberDetailDTO.injectInfo(memberEntity);
+
+        return memberDetailDTO.getMemberId();
+    }
 }

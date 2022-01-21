@@ -17,12 +17,12 @@
 <a th:href="@{|/member/${member.memberId}|}">정보 확인</a>
 <section>
     <form action="/board/update" method="post" enctype="multipart/form-data" th:object="${board}">
-        회원번호 : <input type="text" th:field="*{memberId}" th:value="${board.memberId}" readonly>
-        게시글 번호 : <input type="text" th:field="*{boardId}" th:value="${board.boardId}" readonly>
-        작성자 : <input type="text" th:field="*{boardWriter}" th:value="${board.boardWriter}" readonly>
+        회원번호 : <input type="text" name="memberId" th:value="${board.memberId}" readonly>
+        게시글 번호 : <input type="text" name="boardId" th:value="${board.boardId}" readonly>
+        작성자 : <input type="text" name="boardWriter" th:value="${board.boardWriter}" readonly>
         비밀번호 확인 : <input type="password" id="pwCheck">
-        글 제목 : <input type="text" th:field="*{boardTitle}" th:value="${board.boardTitle}">
-        글 내용 : <textarea th:field="*{boardContents}" th:value="${board.boardContents}"></textarea>
+        글 제목 : <input type="text" name="boardTitle" th:value="${board.boardTitle}">
+        글 내용 : <textarea name="boardContents" th:value="${board.boardContents}"></textarea>
         <input type="button" onclick="update()" value="수정"><button onclick="bToMain()">돌아가기</button>
     </form>
 

@@ -18,8 +18,8 @@
 
 <section>
     <form action="/board/save" method="post" enctype="multipart/form-data" th:object="${bsave}"> <br>
-        회원번호 : <input type="text" th:field="*{memberId}" th:value="${member.memberId}" readonly> <br>
-        작성자 : <input type="text" th:field="*{boardWriter}" th:value="${member.memberNickName}" readonly> <br>
+        회원번호 : <input type="text" name="memberId" th:value="${member.memberId}" readonly> <br>
+        작성자 : <input type="text" name="boardWriter" th:value="${member.memberNickName}" readonly> <br>
         비밀번호 : <input type="password" th:field="*{boardPassword}"> <br>
         제목 : <input type="text" th:field="*{boardTitle}"> <br>
         내용 : <textarea th:field="*{boardContents}" rows="10"></textarea> <br>

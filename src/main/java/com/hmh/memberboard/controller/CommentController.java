@@ -30,7 +30,11 @@ public class CommentController {
 
     @GetMapping("save")
     public @ResponseBody List<CommentDetailDTO> save(@ModelAttribute CommentSaveDTO commentSaveDTO, HttpSession session, @PageableDefault(page = 1)Pageable pageable, Model model) {
-        Long memberId = (Long)session.getAttribute("member");
+        String nickName = (String)session.getAttribute("nickName");
+        System.out.println("nickName = " + nickName);
+        Long memberId = ms.find(nickName);
+        System.out.println("memberId = " + memberId);
+
         MemberDetailDTO memberDetailDTO = ms.findById(memberId);
         commentSaveDTO.setMemberId(memberDetailDTO.getMemberId());
         Long commentId = cs.save(commentSaveDTO);

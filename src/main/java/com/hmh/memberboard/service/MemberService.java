@@ -28,4 +28,6 @@ public interface MemberService {
     void deleteById(Long memberId);
 
     Page<MemberPagingDTO> paging(Pageable pageable);
+
+    Long find(String nickName);
 }

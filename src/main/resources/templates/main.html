@@ -21,7 +21,8 @@
         <a href="/member/">회원 목록 조회</a> <!-- 관리자만 회원 목록을 볼 수 있음. -->
     </div>
     <div> <!-- 로그인 해야 가능 -->
-        <a href="/board/save">게시글 작성</a>
+        <a th:href="@{|/board/save|}">게시글 작성</a>
+        <!-- 이걸 어떻게 적어야 하지? -->
     </div>
     <div>  <!-- 여기다가 보드 게시판 내용들을 findAll 하자. -->
         <table>

@@ -21,7 +21,6 @@ public class BoardEntity extends BaseEntity{
     @Column(name = "board_id")
     private Long id;
     @Column
-    @NotBlank
     private String boardWriter; // 게시글 작성자, 로그인시 닉네임 받음, 비로그인시 임의 작성
     @Column
     @Length(min = 2, max = 50)

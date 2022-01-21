@@ -45,6 +45,7 @@ public class MemberController {
         if (memberId == null) {
 //            bindingResult.hasErrors();
 //            bindingResult.reject("email dup");
+            // 해당 부분 추가하기.
             return "member/save";
         } else {
             return "member/login";

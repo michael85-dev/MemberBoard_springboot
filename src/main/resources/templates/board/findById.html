@@ -17,12 +17,12 @@
 <a th:href="@{|/member/${member.memberId}|}">정보 확인</a>
 <section>
     <div> <!-- 블럭화? -->
-        <form action="/board/update">
-            회원번호 : <input type="text" th:field="*{board.memberId}" th:value="${board.memberId}" readonly> <br>
-            글 번호 : <input type="text" th:field="*{board.boardId}" th:value="${board.boardId}" readonly> <br>
-            작성자 : <input type="text" th:field="*{board.boardWriter}" th:value="${board.boardWriter}" readonly> <br>
-            제목 : <input type="text" th:field="*{board.boardTitle}" th:value="${board.boardTitle}" readonly> <br>
-            내용 : <textarea th:field="*{board.boardContents}" th:value="${board.boardContents}" rows="10" readonly></textarea> <br>
+        <form action="/board/update" enctype="multipart/form-data">
+            회원번호 : <input type="text" name="memberId" th:value="${board.memberId}" readonly> <br>
+            글 번호 : <input type="text" name="boardId" th:value="${board.boardId}" readonly> <br>
+            작성자 : <input type="text" name="boardWriter" th:value="${board.boardWriter}" readonly> <br>
+            제목 : <input type="text" name="boardTitle" th:value="${board.boardTitle}" readonly> <br>
+            내용 : <textarea name="boardContents" th:value="${board.boardContents}" rows="10" readonly></textarea> <br>
             첨부파일 :  <img th:src="@{|/upload/${board.boardPhotoName}|}" alter="사진이 없어요">
                        <input th:value="${board.boardPhotoName}"> <br>
             <input type="submit" value="수정"> <button onclick="bToMain()">돌아가기</button>

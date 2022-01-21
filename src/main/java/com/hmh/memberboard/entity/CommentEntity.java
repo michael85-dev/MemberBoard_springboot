@@ -18,7 +18,6 @@ public class CommentEntity extends BaseEntity{
     @Column(name = "comment_id")
     private Long id;
     @Column
-    @NotBlank
     private String commentWriter; // 게시글 작성자. 로그인시 닉네임을 받으며 비로그인시 임의로 작성 가능
     @Column(length = 1000)
     @Length(min = 5, max = 200)
