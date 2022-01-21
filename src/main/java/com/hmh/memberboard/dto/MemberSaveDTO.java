@@ -11,9 +11,11 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberSaveDTO {
-
+    @NotBlank
     private String memberEmail; //    아이디
+    @NotBlank
     private String memberPassword; //    비밀번호 :
+    @NotBlank
     private String memberName; //    성함 :
     private String memberNickName; //    닉네임 :
     private String memberPhone; //    전화번호 :

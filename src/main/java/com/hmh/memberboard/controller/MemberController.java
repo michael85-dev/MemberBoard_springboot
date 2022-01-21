@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -32,18 +33,18 @@ public class MemberController {
     public String saveForm(Model model) {
         System.out.println("MemberController.saveForm");
 
-        model.addAttribute("msave", new MemberSaveDTO());
+        model.addAttribute("member", new MemberSaveDTO());
 
         return "member/save";
     }
 
     @PostMapping("save")
-    public String save(@ModelAttribute MemberSaveDTO memberSaveDTO, BindingResult bindingResult) throws IOException {
+    public String save(@Validated @ModelAttribute("member") MemberSaveDTO memberSaveDTO, BindingResult bindingResult) throws IOException {
         System.out.println("MemberController.save");
         Long memberId = ms.save(memberSaveDTO);
         if (memberId == null) {
-            bindingResult.hasErrors();
-
+//            bindingResult.hasErrors();
+//            bindingResult.reject("email dup");
             return "member/save";
         } else {
             return "member/login";
@@ -54,24 +55,52 @@ public class MemberController {
     public String loginForm(Model model) {
         System.out.println("MemberController.loginForm");
 
-        model.addAttribute("memberlogin", new MemberLoginDTO());
+        model.addAttribute("member", new MemberLoginDTO());
 
-        return "member/login";
+        return "member/login"; // 현재 여기까진 완료.
     }
 
-    @PostMapping("login") // @ModelAttribyte의 명명이 어떤걸 기준으로 되는지 모르겠는데.
-    public String login(@PathVariable @ModelAttribute("member") MemberLoginDTO memberLoginDTO, HttpSession session, Model model, BindingResult bindingResult, @PageableDefault(page = 1) Pageable pageable) {
-        boolean checkResult = ms.login(memberLoginDTO);
+    @PostMapping("login") // @ModelAttribute의 명명이 어떤걸 기준으로 되는지 모르겠는데.
+    public String login(@Validated @ModelAttribute MemberLoginDTO memberLoginDTO, HttpSession session, Model model, @PageableDefault(page = 1) Pageable pageable) {
+        System.out.println("MemberController.login");
+        // valicated 를 쓰게 되면 하기 문장 사용이 가능함.
+//        if (bindingResult.hasErrors()) { // 벨리데이션 체크
+//            return "member/login";
+//        }
+        boolean checkResult = ms.login(memberLoginDTO); // 왜 memberLogin이 존재하지 않는다고 하지...?
+
+        System.out.println("checkResult = " + checkResult);
+
         if (checkResult) {
+            System.out.println("MemberController.login");
+
             session.setAttribute("id", memberLoginDTO.getMemberEmail());
+
             String nickName = ms.findByNickName(memberLoginDTO);
+
+
+            System.out.println("nickName = " + nickName);
             session.setAttribute("nickName", nickName);
 
             MemberDetailDTO memberDetailDTO = ms.findByMemberId(memberLoginDTO);
+            System.out.println("memberDetailDTO = " + memberDetailDTO);
+            model.addAttribute("m", memberDetailDTO);
+
+// boardfindAll 관련
+            List<BoardDetailDTO> boardDetailDTOList = bs.findAll();
+            model.addAttribute("bList", boardDetailDTOList);
+
+            Page<BoardPagingDTO> boardPaging = bs.paging(pageable);
+            model.addAttribute("bpage", boardPaging);
+
+            int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.B_BLOCK_LIMIT))) - 1) * PagingConst.B_BLOCK_LIMIT + 1;
+            int endPage = ((startPage + PagingConst.B_BLOCK_LIMIT - 1) < boardPaging.getTotalPages()) ? startPage + PagingConst.B_BLOCK_LIMIT - 1 : boardPaging.getTotalPages();
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
 
             return "main";
         } else {
-            bindingResult.reject("LoginFail", "이메일 또는 비밀번호가 틀립니다.");
+//            bindingResult.reject("LoginFail", "이메일 또는 비밀번호가 틀립니다.");
 
             return "member/login";
         }

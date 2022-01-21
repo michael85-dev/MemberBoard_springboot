@@ -29,30 +29,42 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public Long save(MemberSaveDTO memberSaveDTO) throws IOException {
         MemberEntity checkEmail = mr.findByMemberEmail(memberSaveDTO.getMemberEmail());
+        Long memberId = null;
 
-
-        if (checkEmail == null) {
-            Long memberId = null;
+        if (checkEmail != null) {
 
             return memberId;
 
         } else {
-            MemberEntity memberEntity = MemberEntity.toSaveEntity(memberSaveDTO);
 
-            MultipartFile memberPhoto = memberSaveDTO.getMemberPhoto();
-            String memberPhotoName = memberPhoto.getOriginalFilename();
 
-            memberPhotoName = System.currentTimeMillis() + "-" + memberPhotoName;
+            if (memberSaveDTO.getMemberNickName().isEmpty()) {
+                memberSaveDTO.setMemberNickName(memberSaveDTO.getMemberName());
 
-            String savePath = "D:\\GitHub\\Test\\MemberBoard\\src\\main\\resources\\static\\photo";
+            } else {
 
-            if (!memberPhoto.isEmpty()) {
-                memberPhoto.transferTo(new File(savePath));
-                memberSaveDTO.setMemberPhotoName(memberPhotoName);
+                MemberEntity memberEntity = MemberEntity.toSaveEntity(memberSaveDTO);
+
+                MultipartFile memberPhoto = memberSaveDTO.getMemberPhoto();
+                String memberPhotoName = memberPhoto.getOriginalFilename();
+
+                memberPhotoName = System.currentTimeMillis() + "-" + memberPhotoName;
+
+                String savePath = "D:\\GitHub\\Test\\MemberBoard\\src\\main\\resources\\static\\photo\\" + memberPhotoName;
+
+                if (!memberPhoto.isEmpty()) {
+                    memberPhoto.transferTo(new File(savePath));
+                    System.out.println("memberPhotoName = " + memberPhotoName);
+
+                    memberSaveDTO.setMemberPhotoName(memberPhotoName);
+                }
+
+                memberId = mr.save(memberEntity).getId();
+
+                System.out.println("memberId = " + memberId);
+
+
             }
-
-            Long memberId = mr.save(memberEntity).getId();
-
             return memberId;
         }
     }

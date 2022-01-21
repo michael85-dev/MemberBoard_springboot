@@ -10,10 +10,10 @@
 </head>
 <body>
 <h2>Member-save page</h2>
-<form action="/member/save" method="post" th:object="${msave}" enctype="multipart/form-data"> <br>
-    <div th:if="${#fields.hasGlobalErrors()}"> <!-- 글로벌 오류가 있는지 따지기 위한 명령문. controller에 reject에 의해서 해당 문구를 사용할 수 있음. -->
-        <p class="field-error" th:each="err: ${#fields.globalErrors()}" th:text="${err}">글로벌 오류</p>
-    </div>
+<form action="/member/save" method="post" th:object="${member}" enctype="multipart/form-data"> <br>
+<!--    <div th:if="${#fields.hasGlobalErrors()}"> &lt;!&ndash; 글로벌 오류가 있는지 따지기 위한 명령문. controller에 reject에 의해서 해당 문구를 사용할 수 있음. &ndash;&gt;-->
+<!--        <p class="field-error" th:each="err: ${#fields.globalErrors()}" th:text="${err}">글로벌 오류</p>-->
+<!--    </div>-->
     아이디 : <input type="text" th:field="*{memberEmail}" > <!-- onkeyup="idCheck()" <span id="idCheck"></span> --> <br>
     비밀번호 : <input type="password" th:field="*{memberPassword}" placeholder="8 ~ 30자로 입력해주세요"> <br>
     비밀번호 확인 : <input type="password" id="pwCheck" placeholder="다시 한번 입력해 주세요" onkeyup="pwCheck()"> <span id="result"></span> <br>
@@ -22,7 +22,7 @@
     전화번호 : <input type="text" th:field="*{memberPhone}" placeholder="000-0000-0000"> <br>
     주소 : <!-- 주소. 다음 api 사용--> <br>
     메모 : <textarea th:field="*{memberMemo}" rows="5"></textarea> <br>
-    이미지 : <input type="file"> <br>
+    이미지 : <input type="file" th:field="*{memberPhoto}"> <br> <!-- 데이터 비어있어도 문제 없게 설정해야 함. -->
     <input type="submit" value="회원가입"> <button id="bToMain">돌아가기</button>
 </form>
 </body>

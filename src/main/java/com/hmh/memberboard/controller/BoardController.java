@@ -44,7 +44,7 @@ public class BoardController {
     }
 
     @PostMapping("save")
-    public String save(@PathVariable @ModelAttribute BoardSaveDTO boardSaveDTO, Model model, BindingResult bindingResult) throws IOException {
+    public String save(@ModelAttribute BoardSaveDTO boardSaveDTO, Model model, BindingResult bindingResult) throws IOException {
         // 내 생각이 맞다면 MemberDetailDTO는 필요가 없을꺼라고 생각됨.
         // 게시글은 중복 체크가 필요 없고 다른 것도 필요 없음.
         MemberDetailDTO memberDetailDTO = ms.findById(boardSaveDTO.getMemberId());

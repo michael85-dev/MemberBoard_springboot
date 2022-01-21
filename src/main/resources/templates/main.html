@@ -13,16 +13,16 @@
 </head>
 <body>
 <p th:text="${session['nickName']}"></p>
+<p> 닉네임 : <span th:text="${session.nickName}"></span></p>
 <a href="/member/logout">로그아웃</a>
-<a th:href="@{|/member/${member.memberId}|}">정보 확인</a>
+<a th:href="@{|/member/${m.memberId}|}">정보 확인</a>
 <section>
-    <div th:if="${session['loginid']} eq 'admin'" >
+    <div th:if="${session.id eq 'admin'}" > <!-- 이것 때문에 문제가 발생한 상황. -->
         <a href="/member/">회원 목록 조회</a> <!-- 관리자만 회원 목록을 볼 수 있음. -->
     </div>
-    <div th: > <!-- 로그인 해야 가능 -->
+    <div> <!-- 로그인 해야 가능 -->
         <a href="/board/save">게시글 작성</a>
     </div>
-
     <div>  <!-- 여기다가 보드 게시판 내용들을 findAll 하자. -->
         <table>
             <thead>
@@ -44,7 +44,7 @@
                 <td th:text="${b.boardWriter}">작성자</td>
                 <td th:text="${b.boardTitle}">제목</td>
                 <td>
-<!--                    <button th:onclick="findByBoardContents([[${b.boardId}]])">보기</button>-->
+                    <!--                    <button th:onclick="findByBoardContents([[${b.boardId}]])">보기</button>-->
                     <a th:href="@{|/board/${b.boardId}|}">보기</a>
                 </td>
                 <td>조회수</td>
@@ -88,15 +88,7 @@
             </ul>
         </div>
     </div>
+
 </section>
 </body>
-<script>
-    function findByBoardContents(boardId) {
-        console.log(boardId);
-        const reqUrl = "/board/" + boardId;
-        $.ajax({
-            type: 'get'
-        })
-    }
-</script>
 </html>

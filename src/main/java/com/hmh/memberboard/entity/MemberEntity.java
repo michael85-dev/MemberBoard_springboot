@@ -22,13 +22,13 @@ public class MemberEntity extends BaseEntity {
     @Column(name = "member_id")
     private Long id;
     @Column(length = 30)
-    @NotBlank
+//    @NotBlank dto
     private String memberEmail; //    아이디
-    @Length(min = 8, max = 30, message = "8 ~ 30자를 사용해 주세요")
-    @NotNull
+//    @Length(min = 8, max = 30, message = "8 ~ 30자를 사용해 주세요")
+//    @NotNull
     private String memberPassword; //    비밀번호 :
     @Column
-    @NotBlank
+//    @NotBlank
     private String memberName; //    성함 :
     @Column(length = 50)
     private String memberNickName; //    닉네임 :

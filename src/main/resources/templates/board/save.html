@@ -12,9 +12,9 @@
     </style>
 </head>
 <body>
-<p th:text="${session['nickName']}"></p>
+<p th:text="${session.nickName}"></p>
 <a href="/member/logout">로그아웃</a>
-<a th:href="@{|/member/${member.memberId}|}">정보 확인</a> <!-- 왜 문제가 생기는지 나중에 확인 필요함-->
+
 
 <section>
     <form action="/board/save" method="post" enctype="multipart/form-data" th:object="${bsave}"> <br>
@@ -23,7 +23,7 @@
         비밀번호 : <input type="password" th:field="*{boardPassword}"> <br>
         제목 : <input type="text" th:field="*{boardTitle}"> <br>
         내용 : <textarea th:field="*{boardContents}" rows="10"></textarea> <br>
-        사진 : <input type="file"> <br>
+        사진 : <input type="file" th:field="*{boardPhoto}"> <br>
         <input type="submit" value="작성"> <button onclick="bToMain()">돌아가기</button> <br>
     </form>
 </section>
