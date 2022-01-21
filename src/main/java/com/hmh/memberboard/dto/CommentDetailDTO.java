@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentDetailDTO {
+public class CommentDetailDTO extends BaseDTO{
     private String commentWriter;
     private String commentContents;
     private Long boardId;

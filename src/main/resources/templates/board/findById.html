@@ -30,11 +30,11 @@
     </div>
     <div id="comment-write"> <!-- 댓글 작성 창 -->
         <!-- 작성자 -->
-        <input type="text" id="commentWriter" value="${comment.commentWriter}">
-        <input type="text" id="commentContents" placeholder="내용">
+        <input type="text" name="commentWriter" id="commentWriter" th:value="${member.memberNickName}">
+        <input type="text" name="commentContents" id="commentContents" placeholder="내용">
         <button id="comment-write-btn">댓글 등록</button>
     </div>
-    <div id="cocmment-area"> <!-- 직상 뎃글 표기 창 -->
+    <div id="comment-area"> <!-- 직상 뎃글 표기 창 -->
         <table>
             <thead>
                 <tr>
@@ -62,8 +62,27 @@
                     </a>
                 </li>
 
-                <li th:class="${commentList.first} ? 'disabled' : 'abled'" class="page-item">
-                    
+                <li th:class="${cpage.first} ? 'disabled' : 'abled'" class="page-item">
+                    <a class="page-link" th:href="${cpage.first} ? '#' : @{/comment/(page=${cpage.number})}">
+                        <span>&lt;</span>
+                    </a>
+                </li>
+
+                <li th:each="page: ${#numbers.sequence(cStartPage, cEndPage)}"
+                    th:class="${page == cpage.number + 1} ? 'active' : 'deactive'" class="page-item">
+                    <a class="page-link" th:text="${page}" th:href="@{/comment/(page=${page})}"></a>
+                </li>
+
+                <li th:class="${cpage.last} ? 'disabled' : 'abled'">
+                    <a class="page-link" th:href="${cpage.last} ? '#' : @{/comment/(page=${cpage.number + 2})}">
+                        <span>&gt;</span>
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/comment/(page=${cpage.totalPages})}">
+                        <span>Last</span>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -72,7 +91,7 @@
 </section>
 </body>
 <script>
-    $('#comment-write-ttn').click(function() {
+    $('#comment-write-btn').click(function() {
         console.log('댓글 등록 버튼 호출');
         const commentWriter = document.getElementById('commentWriter').value;
         const commentContents = $('#commentContents').val();
@@ -93,7 +112,7 @@
             error: function() {
                 alert('실패');
             }
-        })
+        });
     })
 
     function update(boardId) {

@@ -123,6 +123,7 @@ public class BoardController {
 
         // 1번째 방법 . 여기다가 comment 과녈ㄴ 호출을 전부 한다.
         // 2반째 방법 예전에 jsp에서는 어떻게 했는지 확인해본다.
+
         List<CommentDetailDTO> commentDetailDTOList = cs.findAll(boardDetailDTO.getBoardId());
         model.addAttribute("cList", commentDetailDTOList);
 
