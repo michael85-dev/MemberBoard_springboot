@@ -16,7 +16,7 @@
 <a href="/member/logout">로그아웃</a>
 <a th:href="@{|/member/${member.memberId}|}">정보 확인</a>
 <section>
-    <div> <!-- 블럭화? -->
+    <div> <!-- 블럭화? 이부분 다시 짜야 할꺼 같음.....-->
         <form action="/board/update" enctype="multipart/form-data">
             회원번호 : <input type="text" name="memberId" th:value="${board.memberId}" readonly> <br>
             글 번호 : <input type="text" name="boardId" th:value="${board.boardId}" readonly> <br>
