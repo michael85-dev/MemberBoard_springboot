@@ -16,19 +16,30 @@
 <a href="/member/logout">로그아웃</a>
 <a th:href="@{|/member/${member.memberId}|}">정보 확인</a>
 <section>
-    <div> <!-- 블럭화? 이부분 다시 짜야 할꺼 같음.....-->
-        <form action="/board/update" enctype="multipart/form-data">
-            회원번호 : <input type="text" name="memberId" th:value="${board.memberId}" readonly> <br>
-            글 번호 : <input type="text" name="boardId" th:value="${board.boardId}" readonly> <br>
-            작성자 : <input type="text" name="boardWriter" th:value="${board.boardWriter}" readonly> <br>
-            제목 : <input type="text" name="boardTitle" th:value="${board.boardTitle}" readonly> <br>
-            내용 : <textarea name="boardContents" th:value="${board.boardContents}" rows="10" readonly></textarea> <br>
-            첨부파일 :  <img th:src="@{|/upload/${board.boardPhotoName}|}" alter="사진이 없어요">
-                       <input th:value="${board.boardPhotoName}"> <br>
-            <input type="submit" value="수정"> <button onclick="bToMain()">돌아가기</button>
-        </form>
+<!--    <div> &lt;!&ndash; 블럭화? 이부분 다시 짜야 할꺼 같음.....&ndash;&gt;-->
+<!--        <form action="/board/update" enctype="multipart/form-data">-->
+<!--            회원번호 : <input type="text" name="memberId" th:value="${board.memberId}" readonly> <br>-->
+<!--            글 번호 : <input type="text" name="boardId" th:value="${board.boardId}" readonly> <br>-->
+<!--            작성자 : <input type="text" name="boardWriter" th:value="${board.boardWriter}" readonly> <br>-->
+<!--            제목 : <input type="text" name="boardTitle" th:value="${board.boardTitle}" readonly> <br>-->
+<!--            내용 : <textarea name="boardContents" th:value="${board.boardContents}" rows="10" readonly></textarea> <br>-->
+<!--            첨부파일 :  <img th:src="@{|/upload/${board.boardPhotoName}|}" alter="사진이 없어요">-->
+<!--                       <input th:value="${board.boardPhotoName}"> <br>-->
+<!--            <input type="submit" value="수정"> <button onclick="bToMain()">돌아가기</button>-->
+<!--        </form>-->
+<!--    </div>-->
+    <div> <!-- 정보 보여주는 창-->
+        <p>회원번호 : <span th:value="${board.memberId}"></span></p>
+        <p>글 번호 : <span th:value="${board.boardId}"></span></p>
+        <p>작성자 : <span th:value="${board.boardWriter}"></span></p>
+        <p>제목 : <span th:value="${board.boardTitle}"></span></p>
+        <p>내용 : <textarea th:value="${board.boardContents}" rows="10"></textarea></p>
+        <p>첨부파일 : <img th:src="@{|/upload/${board.boardPhotoName}|}" alter="사진이 없어요"></p>
     </div>
-    <div id="comment-write"> <!-- 댓글 작성 창 -->
+    <div> <!-- 수정 여부 결정하는 창 -->
+        <a href="/board/update">수정</a><a href="/board/findAll">돌아가기</a>
+    </div>
+    <div id="comment-write"> <!-- 댓글 작성 창 --> <!-- 펑션 수정 필요 -->
         <!-- 작성자 -->
         <input type="text" name="commentWriter" id="commentWriter" th:value="${member.memberNickName}">
         <input type="text" name="commentContents" id="commentContents" placeholder="내용">

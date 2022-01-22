@@ -107,4 +107,13 @@ public class BoardServiceImpl implements BoardService{
 
         return boardPage;
     }
+
+    @Override
+    public Long find(String nickName) {
+        BoardEntity boardEntity = br.findByBoardWriter(nickName);
+        BoardDetailDTO boardDetailDTO = BoardDetailDTO.toMoveData(boardEntity);
+        Long boardId = boardDetailDTO.getBoardId();
+
+        return boardId;
+    }
 }

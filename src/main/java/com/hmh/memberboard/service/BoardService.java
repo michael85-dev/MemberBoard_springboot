@@ -19,4 +19,6 @@ public interface BoardService {
     Long update(BoardDetailDTO boardDetailDTO);
 
     Page<BoardPagingDTO> paging(Pageable pageable);
+
+    Long find(String nickName);
 }

@@ -140,7 +140,7 @@ public class BoardController {
     }
 
     @GetMapping("update")
-    public String updateForm(@PathVariable @ModelAttribute BoardDetailDTO boardDetailDTO, Model model, HttpSession session) {
+    public String updateForm(Model model, HttpSession session) {
         String nickName = (String)session.getAttribute("nickName");
         System.out.println("nickName = " + nickName);
         Long memberId = ms.find(nickName);
@@ -148,10 +148,11 @@ public class BoardController {
         MemberDetailDTO memberDetailDTO = ms.findById(memberId);
         model.addAttribute("member", memberDetailDTO);
 
-        BoardDetailDTO boardDetailDTO1 = bs.findById(boardDetailDTO.getBoardId());
+        Long boardId = bs.find(nickName);
+        BoardDetailDTO boardDetailDTO = bs.findById(boardId);
         model.addAttribute("board", boardDetailDTO);
 
-        return "board/update";
+        return "board/update"; // 여기까지 완료
     }
 
     @PostMapping("update")
