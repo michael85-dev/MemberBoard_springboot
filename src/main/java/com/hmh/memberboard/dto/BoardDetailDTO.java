@@ -18,11 +18,13 @@ public class BoardDetailDTO {
     private String boardContents; // 게시글 내용
     private MultipartFile boardPhoto;
     private String boardPhotoName;
+    private int boardHits;
 
     public static BoardDetailDTO toMoveData(BoardEntity b) {
         BoardDetailDTO boardDetailDTO = new BoardDetailDTO();
 
         boardDetailDTO.setBoardId(b.getId());
+//        boardDetailDTO.setBoardHits(b.getBoardHits());
         boardDetailDTO.setBoardContents(b.getBoardContents());
         boardDetailDTO.setBoardPassword(b.getBoardPassword());
         boardDetailDTO.setBoardTitle(b.getBoardTitle());

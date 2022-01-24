@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,12 +36,16 @@ public class BoardServiceImpl implements BoardService{
         String boardPhotoName = boardPhoto.getOriginalFilename();
 
         boardPhotoName = System.currentTimeMillis() + "-" + boardPhotoName;
-        String savePath = "D:\\GitHub\\Test\\MemberBoard\\src\\main\\resources\\static\\photo";
+        String savePath = "D:\\GitHub\\Test\\MemberBoard\\src\\main\\resources\\static\\photo" + boardPhotoName;
 
         if (!boardPhoto.isEmpty()) {
             boardPhoto.transferTo(new File(savePath));
             boardSaveDTO.setBoardPhotoName(boardPhotoName);
         }
+
+        int hits = boardSaveDTO.getBoardHits();
+        hits = 0;
+        boardSaveDTO.setBoardHits(hits);
         // boardSave의 데이터를 Entity에 담아서 보내줘야함.
         // MemberEntity와 연관관계가 있으므로 MemberEntity를 호출하고 그것을 가지고 와야함.
         MemberEntity memberEntity = mr.findById(boardSaveDTO.getMemberId()).get();
@@ -65,9 +70,16 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    @Transactional // jpql 메서드를 호출 하려면 붙여야함.
     public BoardDetailDTO findById(Long boardId) {
         Optional<BoardEntity> boardEntityOptional = br.findById(boardId);
         BoardEntity boardEntity = boardEntityOptional.get();
+
+//        int hits = boardEntity.getBoardHits();
+//        hits = hits + 1;
+//        boardEntity.setBoardHits(hits);
+
+//        int hits = br.boardHits(boardId);
 
         BoardDetailDTO boardDetailDTO = BoardDetailDTO.toMoveData(boardEntity);
 

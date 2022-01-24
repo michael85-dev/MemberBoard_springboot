@@ -48,7 +48,7 @@
                     <!--                    <button th:onclick="findByBoardContents([[${b.boardId}]])">보기</button>-->
                     <a th:href="@{|/board/${b.boardId}|}">보기</a>
                 </td>
-                <td>조회수</td>
+                <td th:text="${b.boardHits}"></td>
                 <!-- 후에 제작하기 -->
                 <td>좋아요</td>
                 <td>싫어요</td>

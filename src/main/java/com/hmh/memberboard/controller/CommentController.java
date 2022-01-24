@@ -13,10 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -28,28 +25,35 @@ public class CommentController {
     private final CommentService cs;
     private final MemberService ms;
 
-    @GetMapping("save")
-    public @ResponseBody List<CommentDetailDTO> save(@ModelAttribute CommentSaveDTO commentSaveDTO, HttpSession session, @PageableDefault(page = 1)Pageable pageable, Model model) {
-        String nickName = (String)session.getAttribute("nickName");
-        System.out.println("nickName = " + nickName);
-        Long memberId = ms.find(nickName);
-        System.out.println("memberId = " + memberId);
+    @PostMapping("save")
+    public @ResponseBody List<CommentDetailDTO> save(@ModelAttribute CommentSaveDTO commentSaveDTO) { //, @PageableDefault(page = 1)Pageable pageable, Model model) {
+//        String nickName = (String)session.getAttribute("nickName");
+//        System.out.println("nickName = " + nickName);
+        Long memberId = ms.find(commentSaveDTO.getCommentWriter());
+//        System.out.println("memberId = " + memberId);
 
-        MemberDetailDTO memberDetailDTO = ms.findById(memberId);
-        commentSaveDTO.setMemberId(memberDetailDTO.getMemberId());
+//        MemberDetailDTO memberDetailDTO = ms.findById(memberId);
+
+        System.out.println("CommentController.save");
+
+        commentSaveDTO.setMemberId(memberId);
+        System.out.println("commentSaveDTO = " + commentSaveDTO);
         Long commentId = cs.save(commentSaveDTO);
 
         List<CommentDetailDTO> commentDetailDTOList = cs.findAll(commentSaveDTO.getBoardId());
-        model.addAttribute("cList", commentDetailDTOList);
+
+//        model.addAttribute("cList", commentDetailDTOList);
 
         // page Model이 먹히려나... (안되면 다른 방안 찾기)
-        Page<CommentPagingDTO> commentList = cs.paging(pageable);
-        model.addAttribute("cpage", commentList);
-
-        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.C_BLOCK_LIMIT))) - 1) * PagingConst.C_BLOCK_LIMIT + 1;
-        int endPage = ((startPage + PagingConst.C_BLOCK_LIMIT - 1) < commentList.getTotalPages()) ? startPage + PagingConst.C_BLOCK_LIMIT - 1 : commentList.getTotalPages();
-        model.addAttribute("cStartPage", startPage);
-        model.addAttribute("cEndPage", endPage);
+        // 이건 board에서 findById가 불러오니까...
+//        Page<CommentPagingDTO> commentList = cs.paging(pageable);
+//        model.addAttribute("cpage", commentList);
+//
+//        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.C_BLOCK_LIMIT))) - 1) * PagingConst.C_BLOCK_LIMIT + 1;
+//        int endPage = ((startPage + PagingConst.C_BLOCK_LIMIT - 1) < commentList.getTotalPages()) ? startPage + PagingConst.C_BLOCK_LIMIT - 1 : commentList.getTotalPages();
+//        model.addAttribute("cStartPage", startPage);
+//        model.addAttribute("cEndPage", endPage);
+        System.out.println("commentDetailDTOList = " + commentDetailDTOList);
 
         return commentDetailDTOList;
     }

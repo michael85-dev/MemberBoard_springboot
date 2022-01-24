@@ -16,5 +16,5 @@ public class BoardSaveDTO {
     private String boardContents; // 게시글 내용
     private MultipartFile boardPhoto;
     private String boardPhotoName;
-
+    private int boardHits;
 }

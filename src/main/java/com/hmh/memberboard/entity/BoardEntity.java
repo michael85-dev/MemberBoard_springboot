@@ -33,6 +33,9 @@ public class BoardEntity extends BaseEntity{
     @Column
     private String boardPhotoName; // 사진 첨부 (글 내부는 아님.) 가능하면 후에 추가 가능
 
+    @Column
+    private Integer boardHits;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
@@ -48,6 +51,8 @@ public class BoardEntity extends BaseEntity{
         boardEntity.setBoardContents(boardSaveDTO.getBoardContents());
         boardEntity.setBoardPhotoName(boardSaveDTO.getBoardPhotoName());
         boardEntity.setMemberEntity(memberEntity);
+        // 글작성, 글수정할 떈 hits값을 건드릴필요가 없죠
+        boardEntity.setBoardHits(boardSaveDTO.getBoardHits());
 
         return boardEntity;
     }
@@ -61,6 +66,7 @@ public class BoardEntity extends BaseEntity{
         boardEntity.setBoardContents(boardDetailDTO.getBoardContents());
         boardEntity.setBoardTitle(boardDetailDTO.getBoardTitle());
         boardEntity.setMemberEntity(memberEntity);
+        boardEntity.setBoardHits(boardDetailDTO.getBoardHits());
 
         return boardEntity;
     }

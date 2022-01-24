@@ -34,8 +34,10 @@ public class CommentServiceImpl implements CommentService{
 //        Optional<BoardEntity> boardEntityOptional = br.findById(commentSaveDTO.getBoardId());
 //        BoardEntity boardEntity = boardEntityOptional.get();
 
-        BoardEntity boardEntity = br.findByBoardWriter(commentSaveDTO.getCommentWriter());
+        // 여기서 문제.. 작성자로 조회를 하니 조회결과가 한개가 아닌거죠... 여기서는 boardId를 기준으로 조회를 해서 BoardEntity를 가져와야지 여기만 수정하면 될듯하네요
+//        BoardEntity boardEntity = br.findByBoardWriter(commentSaveDTO.getCommentWriter());
 
+        BoardEntity boardEntity = br.findById(commentSaveDTO.getBoardId()).get();
 //        MemberEntity memberEntity = mr.findByMemberId(commentSaveDTO.getMemberId()); => 어떻게 가지고 올까.
         MemberEntity memberEntity = mr.findByMemberNickName(commentSaveDTO.getCommentWriter());
         CommentEntity commentEntity = CommentEntity.toSave(commentSaveDTO, boardEntity, memberEntity);

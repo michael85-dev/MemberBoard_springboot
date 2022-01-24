@@ -156,7 +156,7 @@ public class BoardController {
     }
 
     @PostMapping("update")
-    public String update(@ModelAttribute BoardDetailDTO boardDetailDTO, HttpSession session, Model model) {
+    public String update(@PathVariable @ModelAttribute BoardDetailDTO boardDetailDTO, HttpSession session, Model model) {
         String nickName = (String)session.getAttribute("nickName");
         System.out.println("nickName = " + nickName);
         Long memberId = ms.find(nickName);

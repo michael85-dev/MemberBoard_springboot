@@ -29,18 +29,19 @@
 <!--        </form>-->
 <!--    </div>-->
     <div> <!-- 정보 보여주는 창-->
-        <p>회원번호 : <span th:value="${board.memberId}"></span></p>
-        <p>글 번호 : <span th:value="${board.boardId}"></span></p>
-        <p>작성자 : <span th:value="${board.boardWriter}"></span></p>
-        <p>제목 : <span th:value="${board.boardTitle}"></span></p>
-        <p>내용 : <textarea th:value="${board.boardContents}" rows="10"></textarea></p>
+        <p>회원번호 : <span th:text="*{board.memberId}"></span></p> <!-- 해당 내용을 어떻게 처리해야할지? -->
+        <p>글 번호 : <span th:text="${board.boardId}"></span></p>
+        <p>작성자 : <span th:text="${board.boardWriter}"></span></p>
+        <p>제목 : <span th:text="${board.boardTitle}"></span></p>
+        <p>내용 : <textarea th:text="${board.boardContents}" rows="10"></textarea></p>
         <p>첨부파일 : <img th:src="@{|/upload/${board.boardPhotoName}|}" alter="사진이 없어요"></p>
     </div>
     <div> <!-- 수정 여부 결정하는 창 -->
-        <a href="/board/update">수정</a><a href="/board/findAll">돌아가기</a>
+        <a th:href="@{|/board/update/${board.boardId}|}">수정</a><a href="/board/">돌아가기</a>
     </div>
     <div id="comment-write"> <!-- 댓글 작성 창 --> <!-- 펑션 수정 필요 -->
         <!-- 작성자 -->
+<!--        <input type="text" name="boardId" id="boardId" th:value="${board.boardId}">-->
         <input type="text" name="commentWriter" id="commentWriter" th:value="${member.memberNickName}">
         <input type="text" name="commentContents" id="commentContents" placeholder="내용">
         <button id="comment-write-btn">댓글 등록</button>
@@ -52,15 +53,13 @@
                     <th>댓글번호</th>
                     <th>작성자</th>
                     <th>내용</th>
-                    <th>작성시간</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="c: ${cList}">
-                    <td th:value="${c.commentId}">댓글번호</td>
-                    <td th:value="${c.commentWriter}">작성자</td>
-                    <td th:value="${c.commentContents}">내용</td>
-                    <td th:value="${c.updateTime}">작성시간</td>
+                    <td th:text="${c.commentId}">댓글번호</td>
+                    <td th:text="${c.commentWriter}">작성자</td>
+                    <td th:text="${c.commentContents}">내용</td>
                 </tr>
             </tbody>
         </table>
@@ -105,8 +104,9 @@
     $('#comment-write-btn').click(function() {
         console.log('댓글 등록 버튼 호출');
         const commentWriter = document.getElementById('commentWriter').value;
-        const commentContents = $('#commentContents').val();
+        const commentContents = document.getElementById('commentContents').value; //$('#commentContents').val();
         const boardId = '[[${board.boardId}]]';
+        // const boardId = document.getElementById('boardId').value;
 
         $.ajax({
             type: 'post',
@@ -117,8 +117,9 @@
                 'boardId': boardId
             },
             dataType: 'json',
-            success: function(boardId) {
+            success: function(result) {
                 console.log(result);
+                location.href="/board/" + boardId;
             },
             error: function() {
                 alert('실패');
