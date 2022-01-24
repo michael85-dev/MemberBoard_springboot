@@ -2,7 +2,6 @@ package com.hmh.memberboard.controller;
 
 import com.hmh.memberboard.common.PagingConst;
 import com.hmh.memberboard.dto.*;
-import com.hmh.memberboard.entity.BoardEntity;
 import com.hmh.memberboard.service.BoardService;
 import com.hmh.memberboard.service.CommentService;
 import com.hmh.memberboard.service.MemberService;
@@ -10,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.reflect.Member;
 import java.util.List;
 
 @Controller
@@ -82,10 +78,10 @@ public class BoardController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        return "main";
+        return "board/main";
     }
 
-    @GetMapping
+    @GetMapping("main")
     public String findAll(Model model, HttpSession session, @PageableDefault(page = 1)Pageable pageable) {
         String nickName = (String)session.getAttribute("nickName");
         System.out.println("nickName = " + nickName);
@@ -105,7 +101,7 @@ public class BoardController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        return "main";
+        return "board/main";
     }
 
     @GetMapping("{boardId}")

@@ -4,10 +4,8 @@ import com.hmh.memberboard.common.PagingConst;
 import com.hmh.memberboard.dto.*;
 import com.hmh.memberboard.service.BoardService;
 import com.hmh.memberboard.service.MemberService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -99,7 +97,7 @@ public class MemberController {
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
 
-            return "main";
+            return "board/main";
         } else {
 //            bindingResult.reject("LoginFail", "이메일 또는 비밀번호가 틀립니다.");
 
@@ -127,7 +125,7 @@ public class MemberController {
     public String update(@ModelAttribute MemberDetailDTO memberDetailDTO) {
         ms.update(memberDetailDTO);
 
-        return "main";
+        return "board/main";
     }
 
     @GetMapping

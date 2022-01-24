@@ -37,7 +37,8 @@
         <p>첨부파일 : <img th:src="@{|/upload/${board.boardPhotoName}|}" alter="사진이 없어요"></p>
     </div>
     <div> <!-- 수정 여부 결정하는 창 -->
-        <a th:href="@{|/board/update/${board.boardId}|}">수정</a><a href="/board/">돌아가기</a>
+        <a th:href="@{|/board/update/${board.boardId}|}">수정</a><a th:href="@{|/board/|}">돌아가기</a>
+        <!-- 이렇게 호출을 해야 하나? -->
     </div>
     <div id="comment-write"> <!-- 댓글 작성 창 --> <!-- 펑션 수정 필요 -->
         <!-- 작성자 -->
