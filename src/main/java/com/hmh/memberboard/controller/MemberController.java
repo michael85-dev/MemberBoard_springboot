@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Binding;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
@@ -53,14 +54,13 @@ public class MemberController {
     @GetMapping("login")
     public String loginForm(Model model) {
         System.out.println("MemberController.loginForm");
-
         model.addAttribute("member", new MemberLoginDTO());
 
         return "member/login"; // 현재 여기까진 완료.
     }
 
     @PostMapping("login") // @ModelAttribute의 명명이 어떤걸 기준으로 되는지 모르겠는데.
-    public String login(@Validated @ModelAttribute MemberLoginDTO memberLoginDTO, HttpSession session, Model model, @PageableDefault(page = 1) Pageable pageable) {
+    public String login(@Validated @ModelAttribute MemberLoginDTO memberLoginDTO, BindingResult bindingResult, HttpSession session, Model model, @PageableDefault(page = 1) Pageable pageable) {
         System.out.println("MemberController.login");
         // valicated 를 쓰게 되면 하기 문장 사용이 가능함.
 //        if (bindingResult.hasErrors()) { // 벨리데이션 체크
@@ -85,7 +85,7 @@ public class MemberController {
             System.out.println("memberDetailDTO = " + memberDetailDTO);
             model.addAttribute("m", memberDetailDTO);
 
-// boardfindAll 관련
+            // boardfindAll 관련
             List<BoardDetailDTO> boardDetailDTOList = bs.findAll();
             model.addAttribute("bList", boardDetailDTOList);
 
@@ -97,9 +97,17 @@ public class MemberController {
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
 
-            return "board/main";
+            String redirectURL = (String) session.getAttribute("redirectURL");
+            System.out.println("redirectURL = " + redirectURL);
+
+            if (redirectURL != null) {
+                return "redirect:/board/main";
+            } else {
+                return "redirect:/";
+            }
+
         } else {
-//            bindingResult.reject("LoginFail", "이메일 또는 비밀번호가 틀립니다.");
+            bindingResult.reject("LoginFail", "이메일 또는 비밀번호가 틀립니다.");
 
             return "member/login";
         }
